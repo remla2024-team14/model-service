@@ -1,3 +1,4 @@
 boto3==1.34.95
 tensorflow==2.16.1
 python-dotenv
+Flask==3.0.3
