@@ -1,0 +1,36 @@
+name: Release to GitHub Container Registry
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build Docker image
+      run: docker build -t model-serve .
+
+    - name: Log into GitHub Container Registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+    - name: Tag Docker image
+      run: docker tag model-serve ghcr.io/your-github-username/your-repo-name:latest
+
+    - name: Push Docker image to GitHub Container Registry
+      run: docker push ghcr.io/your-github-username/your-repo-name:latest
+
+    - name: Trigger release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v1.0.0  # Update this to match your versioning scheme
+        release_name: Release v1.0.0  # Update this with your release name
+        body: |
+          Describe your release here.
