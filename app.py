@@ -18,7 +18,6 @@ def run_inference():
     model = load_model(model_path)
 
     y_pred = model.predict([[input_url]])
-    print(y_pred)
 
 
 if __name__ == '__main__':
