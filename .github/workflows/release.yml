@@ -20,17 +20,19 @@ jobs:
       run: echo "${{ secrets.TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
     - name: Tag Docker image
-      run: docker tag model-serve ghcr.io/remla2024-team14/model-serving:latest
+      run: |
+        IMG="ghcr.io/remla2024-team14/model-serving:latest"
+        docker tag model-serve $IMG
 
     - name: Push Docker image to GitHub Container Registry
-      run: docker push ghcr.io/remla2024-team14/model-serving:latest
+      run: docker push --all-tags $IMG
 
     - name: Trigger release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
       with:
-        tag_name: v1.0.0
-        release_name: Release v1.0.0
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
         body: |
           Release model inference server
