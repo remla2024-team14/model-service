@@ -27,7 +27,7 @@ jobs:
         docker tag model-serve $IMG
 
     - name: Push Docker image to GitHub Container Registry
-      run: docker push ${IMG}
+      run: docker push "${IMG}"
 
     - name: Trigger release
       uses: actions/create-release@v1
