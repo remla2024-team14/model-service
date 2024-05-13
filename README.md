@@ -8,6 +8,10 @@ In order to avoid the model being added to the image and to make it interchangea
 AWS_ACCESS_KEY_ID=`aws_access_key_id`
 AWS_SECRET_ACCESS_KEY=`aws_secret_access_key`
 
+### Starting the inference server using Docker
+
+After building the image using `docker build -t inference-server .`, you can start the server by running `docker run -p 5000:5000 --env-file .env inference-server`. Make sure you are in a directory where an appropriate .env file resides.
+
 
 ## How to: Custom Docker Network
 If you haven't already, you should make a docker network to make sure that the ip address stays the same when running the image. 
