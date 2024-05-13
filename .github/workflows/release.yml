@@ -7,6 +7,9 @@ on:
     types:
       - opened
 
+env:
+  IMG: ghcr.io/remla2024-team14/model-serving:latest
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,12 +25,10 @@ jobs:
       run: echo "${{ secrets.TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
     - name: Tag Docker image
-      run: |
-        IMG="ghcr.io/remla2024-team14/model-serving:latest"
-        docker tag model-serve $IMG
+      run: docker tag model-serve ${{ env.IMG }}
 
     - name: Push Docker image to GitHub Container Registry
-      run: docker push ${{IMG}}
+      run: docker push ${{ env.IMG }}
 
     - name: Trigger release
       uses: actions/create-release@v1
