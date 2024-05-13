@@ -1,9 +1,11 @@
 name: Release to GitHub Container Registry
 
 on:
-  push:
+  pull_request:
     branches:
       - main
+    types:
+      - opened
 
 jobs:
   build:
@@ -25,7 +27,7 @@ jobs:
         docker tag model-serve $IMG
 
     - name: Push Docker image to GitHub Container Registry
-      run: docker push --all-tags $IMG
+      run: docker push $IMG
 
     - name: Trigger release
       uses: actions/create-release@v1
