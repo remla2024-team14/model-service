@@ -1,11 +1,25 @@
 from flask import Flask, request
 from tensorflow.keras.models import load_model
+from flask_swagger_ui import get_swaggerui_blueprint
 from lib_ml.preprocessing import TextPreprocessor
 
 from utils import fetch_model_from_s3_bucket
 
 app = Flask(__name__)
 
+# Define the Swagger UI blueprint
+SWAGGER_URL = '/swagger'
+API_URL = '/api/swagger.json'
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "Phishing Detection App"
+    }
+)
+
+# Register the Swagger UI blueprint with the app
+app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
 @app.route("/predict", methods=['POST'])
 def run_inference():
