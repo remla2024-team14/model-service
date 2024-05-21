@@ -4,3 +4,4 @@ python-dotenv
 Flask==3.0.3
 numpy==1.26.0
 lib_ml_remla_team14_a2
+flask_swagger_ui
