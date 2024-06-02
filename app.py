@@ -35,12 +35,8 @@ def run_inference():
     model = load_model(model_path)
 
     y_pred = model.predict(processed_texts)
-    y_pred = 0 if y_pred < 0.5 else 1
 
-    if y_pred == 1:
-        return "Phishing"
-    else:
-        return "Valid"
+    return str(y_pred)
 
 
 if __name__ == '__main__':
