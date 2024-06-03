@@ -36,7 +36,7 @@ def run_inference():
 
     y_pred = model.predict(processed_texts)
 
-    return str(y_pred)
+    return str(y_pred[0][0])
 
 
 if __name__ == '__main__':
