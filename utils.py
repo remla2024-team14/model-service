@@ -1,18 +1,13 @@
 import os
-import boto3
-from dotenv import load_dotenv
-
-
-load_dotenv()
+import urllib
 
 
 def fetch_model_from_s3_bucket(model_name):
     destination_path = os.path.join("models", model_name)
     if os.path.isfile(destination_path):
         return destination_path
-    s3 = boto3.client('s3', aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
-                      aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"))
-    s3.download_file('url-phishing-models', model_name, destination_path)
+    bucket_path = 'https://team14awsbucket.s3.amazonaws.com/' + model_name
+    urllib.request.urlretrieve(bucket_path, destination_path)
     return destination_path
 
 
